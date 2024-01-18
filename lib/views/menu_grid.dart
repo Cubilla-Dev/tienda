@@ -9,13 +9,16 @@ class MenuGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //lo que no estan en oferta
+    final List<Map<String, dynamic>> notOferta =
+        imageUrls.where((element) => element['oferta'] == false).toList();
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 8.0,
           mainAxisSpacing: 8.0,
         ),
-        itemCount: imageUrls.length,
+        itemCount: notOferta.length,
         itemBuilder: (context, index) {
           return Stack(
             children: [

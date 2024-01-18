@@ -10,6 +10,8 @@ class MyImageSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> ofertaImagen =
+        imageUrls.where((map) => map['oferta'] == true).toList();
     return CarouselSlider(
       options: CarouselOptions(
         height: 200.0,
@@ -21,19 +23,23 @@ class MyImageSlider extends StatelessWidget {
         autoPlayAnimationDuration: const Duration(milliseconds: 800),
         viewportFraction: 0.8,
       ),
-      items: imageUrls.map((map) {
+      items: ofertaImagen.map((map) {
         return Builder(
           builder: (BuildContext context) {
             return Stack(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Image.network(
-                    map['url'],
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    //si se cumple la condicion se muestra la imagen debes de usar if
+                    child: Visibility(
+                      visible: (map['oferta'] == true),
+                      child: Image.network(
+                        map['url'],
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                //posicion de la oferta
                 Positioned(
                   bottom: 10.0,
                   left: 10.0,
@@ -41,20 +47,27 @@ class MyImageSlider extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        map['name'],
-                        style: const TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        'Precio: \$${map['precio']}',
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.white,
+                      if (map['oferta'] == true)
+                        Container(
+                          alignment: Alignment.center,
+                          width: 150,
+                          height: 23,
+                          color: Colors.red,
+                          child: Text(
+                            'Oferta: \$${map['precio']}',
+                            style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         ),
-                      ),
+                      // Text(
+                      //   '\$${map['precio']}',
+                      //   style: const TextStyle(
+                      //     fontSize: 14.0,
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
                     ],
                   ),
                 )
