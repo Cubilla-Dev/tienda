@@ -25,7 +25,8 @@ class _ShadowContaiState extends State<ShadowContai> {
   Widget build(BuildContext context) {
     return Shimmer(
         child: Container(
-      color: Colors.deepPurple,
+      color: Colors.grey,
+      child: Text('Texto'),
     ));
   }
 }
